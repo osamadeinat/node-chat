@@ -18,7 +18,6 @@ Simple Node-Chat Server With AngularJs, Using Socket.io.
         angular.min.js
         app.js
         bootstrap.min.js
-    
         jquery.min.js
     
       index.html
