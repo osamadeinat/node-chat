@@ -19,7 +19,9 @@ var sockets = [];
 var me = null;
 
 io.on('connection', function (socket) {
-    me = socket;
+    
+    me = socket.id;
+    
     messages.forEach(function (data) {
       socket.emit('message', data);
     });
@@ -31,7 +33,7 @@ io.on('connection', function (socket) {
       updateRoster();
     });
 
-    socket.on('message', function (msg) {6
+    socket.on('message', function (msg) {
       var text = String(msg || '');
 
       if (!text)
@@ -46,6 +48,11 @@ io.on('connection', function (socket) {
         broadcast('message', data);
         messages.push(data);
       });
+    });
+    
+    socket.on('typing', function(options) {
+        typing('usr-typing', options[0], options[1]);
+        
     });
 
     socket.on('identify', function (name) {
@@ -73,11 +80,11 @@ function broadcast(event, data) {
   });
 }
 
-function typing(event, isTyping) {
+function typing(event, user, isTyping) {
   // body...
   sockets.forEach(function (socket) {
-    if(socket != me){
-      socket.emit(event, isTyping);  
+    if(socket.id != me){
+      socket.emit(event, (isTyping == true) ? user : "");  
     }
   });
 }
