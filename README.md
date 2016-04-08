@@ -1,4 +1,4 @@
-# node-chat
+# Angular Socket.io With NodeJs
 Simple Node-Chat Server With AngularJs, Using Socket.io.
 
   node-server/
